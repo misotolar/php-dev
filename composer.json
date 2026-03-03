@@ -1,7 +1,7 @@
 {
     "name": "misotolar/php-dev",
     "description": "PHP Development Tools",
-    "type": "library",
+    "type": "composer-plugin",
     "homepage": "https://michal.sotolar.com",
     "license": "MIT",
     "authors": [
@@ -17,11 +17,31 @@
     },
     "require": {
         "php": ">=7.3",
-        "friendsofphp/php-cs-fixer": "^3.4"
+        "dg/composer-cleaner": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.4",
+        "cweagans/composer-patches": "^1.7",
+        "composer-plugin-api": "^2.0"
+    },
+    "require-dev": {
+        "composer/composer": "^2.0"
     },
     "autoload": {
         "psr-4": {
             "Development\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dg/composer-cleaner": false,
+            "cweagans/composer-patches": true
+        }
+    },
+    "extra": {
+        "class": "Development\\Composer\\Plugin",
+        "patches": {
+            "dg/composer-cleaner": [
+                "https://github.com/misotolar/composer-cleaner/commit/c2f218cca385c2519efa6973db946cfe1a627153.patch"
+            ]
         }
     }
 }
