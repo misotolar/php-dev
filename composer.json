@@ -10,7 +10,18 @@
             "email": "michal@sotolar.com"
         }
     ],
+    "support": {
+        "email": "michal@sotolar.com",
+        "source": "https://github.com/misotolar/php-dev",
+        "issues": "https://github.com/misotolar/php-dev/issues"
+    },
     "require": {
-        "php": ">=7.3"
+        "php": ">=7.3",
+        "friendsofphp/php-cs-fixer": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Development\\": "src/"
+        }
     }
 }
