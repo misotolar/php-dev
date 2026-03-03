@@ -1,0 +1,16 @@
+{
+    "name": "misotolar/php-dev",
+    "description": "PHP Development Tools",
+    "type": "library",
+    "homepage": "https://michal.sotolar.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michal Sotolar",
+            "email": "michal@sotolar.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.3"
+    }
+}
