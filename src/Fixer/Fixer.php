@@ -27,7 +27,7 @@ class Fixer extends Config
     /**
      * Create fixer config instance
      */
-    public static function create(string $path, ?Finder $finder = null, ?AbstractRuleset $ruleset = null): self
+    public static function create(string $path, ?AbstractRuleset $ruleset = null, ?Finder $finder = null): self
     {
         $config = new static();
 
