@@ -81,7 +81,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             return;
         }
 
-        // Normalización
         foreach ($event->getTransaction()->getOperations() as $operation) {
             if (null !== $package = $this->getOperationPackage($operation)) {
                 if ('path' === $package->getDistType() && $package->getDistUrl() === $package->getName()) {
@@ -133,12 +132,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     private function getOperationPackage(OperationInterface $operation): ?PackageInterface
     {
-        // Instalación
         if ('install' === $operation->getOperationType()) {
             return $operation->getPackage();
         }
 
-        // Actualización
         if ('update' === $operation->getOperationType()) {
             return $operation->getTargetPackage();
         }
