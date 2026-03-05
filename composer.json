@@ -7,7 +7,9 @@
     "authors": [
         {
             "name": "Michal Sotolar",
-            "email": "michal@sotolar.com"
+            "email": "michal@sotolar.com",
+            "homepage": "https://michal.sotolar.com",
+            "role": "Developer"
         }
     ],
     "support": {
@@ -43,5 +45,9 @@
                 "https://github.com/misotolar/composer-cleaner/commit/c2f218cca385c2519efa6973db946cfe1a627153.patch"
             ]
         }
-    }
+    },
+    "bin": [
+        "bin/fixer.php",
+        "bin/header.php"
+    ]
 }

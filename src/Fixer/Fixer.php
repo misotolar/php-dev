@@ -63,7 +63,7 @@ class Fixer extends Config
     }
 
     /**
-     * PHPDoc header comment
+     * Set header comment
      */
     public function withHeader(string $header, array $attributes = []): self
     {
@@ -93,5 +93,33 @@ class Fixer extends Config
         $rules['header_comment']['header'] = $header;
 
         return $this->setRules($rules);
+    }
+
+    /**
+     * Get header comment
+     */
+    public function getHeaderAsComment(): ?string
+    {
+        $rules = $this->getRules()['header_comment'] ?? null;
+        if (null === $rules || false !== empty($rules['header'])) {
+            return null;
+        }
+
+        $comment = '/**' . $this->getLineEnding();
+        if (true !== isset($rules['separate']) || false !== \in_array($rules['separate'], ['both', 'top'])) {
+            $comment = $this->getLineEnding() . $comment;
+        }
+
+        $header = \explode("\n", \str_replace("\r", '', $rules['header']));
+        foreach ($header as $line) {
+            $comment .= \rtrim(' * ' . $line) . $this->getLineEnding();
+        }
+
+        $comment .= ' */' . $this->getLineEnding();
+        if (true !== isset($rules['separate']) || false !== \in_array($rules['separate'], ['both', 'top'])) {
+            $comment .= $this->getLineEnding();
+        }
+
+        return $comment;
     }
 }
