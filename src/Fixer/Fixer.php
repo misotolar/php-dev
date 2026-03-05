@@ -16,6 +16,7 @@ namespace Development\Fixer;
 
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
+use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 
 /**
  * CS Fixer config
@@ -80,12 +81,12 @@ class Fixer extends Config
             }
         }
 
-        // Header comment default rules
+        // Header comment defaults
         if (true !== isset($rules['header_comment'])) {
             $rules['header_comment'] = [
-                'comment_type' => 'PHPDoc',
-                'location' => 'after_open',
-                'separate' => 'both',
+                'comment_type' => $attributes['type'] ?? HeaderCommentFixer::HEADER_PHPDOC,
+                'location' => $attributes['location'] ?? 'after_open',
+                'separate' => $attributes['separate'] ?? 'both',
             ];
         }
 
