@@ -14,8 +14,6 @@
 
 require 'vendor/autoload.php';
 
-use Development\Fixer\Fixer;
-
 $header = <<<'EOF'
 This file is part of PHP Development Tools library.
 
@@ -28,4 +26,4 @@ file that was distributed with this source code.
 @link https://michal.sotolar.com
 EOF;
 
-return Fixer::create(__DIR__)->withHeader($header, ['date' => 2026]);
+return Development\Fixer\Fixer::create(__DIR__)->withHeader($header, ['date' => [2026]]);
