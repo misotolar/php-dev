@@ -28,6 +28,10 @@ if (null === $fixer) {
     exit;
 }
 
+if (true !== \is_dir(\implode(\DIRECTORY_SEPARATOR, [$argv[1], 'vendor']))) {
+    require \implode(\DIRECTORY_SEPARATOR, [__DIR__, '..', 'vendor', 'autoload.php']);
+}
+
 $fixer = require $fixer;
 if (null === $header = $fixer->getHeaderAsComment()) {
     exit;
