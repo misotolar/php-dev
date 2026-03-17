@@ -29,32 +29,6 @@ class Framework extends PHP73Ruleset
     /**
      * {@inheritdoc}
      */
-    protected $_nativeFunctions = [
-        'di',
-        'util',
-        '__',
-        '_n',
-        '_noop',
-        'application_log',
-        'console_log',
-        'debug_log',
-        'exception_log',
-        'adminer_object',
-        'sg_load_file',
-        'sg_encode_file',
-        'sg_decode_string',
-        'sg_encode_string',
-        'sg_get_const',
-        'wincache_ucache_get',
-        'wincache_ucache_set',
-        'wincache_ucache_exists',
-        'wincache_ucache_delete',
-        'wincache_ucache_info',
-    ];
-
-    /**
-     * {@inheritdoc}
-     */
     protected function getNativeFunctions(): array
     {
         $functions = parent::getNativeFunctions();
