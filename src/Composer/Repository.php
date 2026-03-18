@@ -19,6 +19,8 @@ use Composer\Json\JsonFile;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\Version\VersionParser;
 use Composer\Repository\ArrayRepository;
+use Composer\Semver\Constraint\ConstraintInterface;
+use Composer\Semver\Intervals;
 
 /**
  * Dynamic repository for local development
@@ -63,10 +65,11 @@ class Repository extends ArrayRepository
      */
     public function loadPackages(array $packageNameMap, array $acceptableStabilities, array $stabilityFlags, array $alreadyLoaded = [])
     {
-        $loader = new ArrayLoader(new VersionParser);
+        $parser = new VersionParser;
+        $loader = new ArrayLoader($parser);
         $result = ['namesFound' => [], 'packages' => []];
 
-        foreach (\array_keys($packageNameMap) as $name) {
+        foreach ($packageNameMap as $name => $constraint) {
             $url = \str_replace('/', \DIRECTORY_SEPARATOR, $name);
 
             if (false === $url = \realpath($_ENV['COMPOSER_LOCAL_PATH'] . \DIRECTORY_SEPARATOR . $url)) {
@@ -78,9 +81,7 @@ class Repository extends ArrayRepository
             }
 
             $package = JsonFile::parseJson(\file_get_contents($composer));
-            if (true !== isset($package['version'])) {
-                $package['version'] = 'dev-master';
-            }
+            $package['version'] = $this->getRequiredVersion($constraint);
 
             $package = $loader->load($package);
 
@@ -111,5 +112,21 @@ class Repository extends ArrayRepository
             \realpath($this->_composer->getConfig()->getConfigSource()->getName()),
             \realpath($_ENV['COMPOSER_LOCAL_PATH'])
         );
+    }
+
+    /**
+     * Get required version
+     */
+    private function getRequiredVersion(ConstraintInterface $constraint): string
+    {
+        $intervals = Intervals::get($constraint);
+        if (false !== empty($intervals['numeric'])) {
+            return 'dev-master';
+        }
+
+        $version = \end($intervals['numeric'])->getEnd()->getVersion();
+        $version = \preg_replace('/\.0$/', '', $version);
+
+        return $version;
     }
 }
