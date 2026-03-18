@@ -87,7 +87,7 @@ class Repository extends ArrayRepository
 
             $package->setDistUrl($name);
             $package->setDistType('path');
-            $package->setDistReference('dev-master');
+            $package->setDistReference('master');
             $package->setTransportOptions([
                 'symlink' => $this->getSymlinkOption(),
             ]);
