@@ -96,6 +96,21 @@ class Repository extends ArrayRepository
                 $package->setDistReference((new \DateTime)->format('YmdHis'));
             }
 
+            $extra = $package->getExtra();
+            if (false !== isset($extra['patches'])) {
+                foreach ($extra['patches'] as $dependency => $patches) {
+                    foreach ($patches as $offset => $patch) {
+                        if (false === \filter_var($patch, \FILTER_VALIDATE_URL)) {
+                            if (false !== \file_exists($url . \DIRECTORY_SEPARATOR . $patch)) {
+                                $extra['patches'][$dependency][$offset] = \sprintf('vendor/%s/%s', $name, $patch);
+                            }
+                        }
+                    }
+                }
+
+                $package->setExtra($extra);
+            }
+
             $result['namesFound'][] = $name;
             $result['packages'][] = $package;
         }
