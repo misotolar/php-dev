@@ -32,13 +32,17 @@ if (true !== \is_dir(\implode(\DIRECTORY_SEPARATOR, [$argv[1], 'vendor']))) {
     require \implode(\DIRECTORY_SEPARATOR, [__DIR__, '..', 'vendor', 'autoload.php']);
 }
 
-$fixer = require $fixer;
-if (null === $header = $fixer->getHeaderAsComment()) {
+$config = require $fixer;
+if (true !== \is_object($config) || true !== $config instanceof \PhpCsFixer\ConfigInterface) {
+    exit;
+}
+
+if (null === $header = $config->getHeaderAsComment()) {
     exit;
 }
 
 $output = \file_get_contents($argv[2]);
-if (0 === \strpos($output, '/**') || 0 === \strpos($output, $fixer->getLineEnding() . '/**')) {
+if (0 === \strpos($output, '/**') || 0 === \strpos($output, $config->getLineEnding() . '/**')) {
     $current = \substr($output, 0, \strpos($output, ' */') + 3);
     if (false !== \strpos($current, '@copyright')) {
         $output = \substr($output, \strlen($current));

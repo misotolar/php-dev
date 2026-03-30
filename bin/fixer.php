@@ -28,6 +28,15 @@ if (null === $fixer) {
     exit;
 }
 
+if (true !== \is_dir(\implode(\DIRECTORY_SEPARATOR, [$argv[1], 'vendor']))) {
+    require \implode(\DIRECTORY_SEPARATOR, [__DIR__, '..', 'vendor', 'autoload.php']);
+}
+
+$config = require $fixer;
+if (true !== \is_object($config) || true !== $config instanceof \PhpCsFixer\ConfigInterface) {
+    exit;
+}
+
 \system(\sprintf(
     '"%s" fix --config="%s" "%s"',
     \implode(\DIRECTORY_SEPARATOR, [__DIR__, '..', 'vendor', 'bin', 'php-cs-fixer']),
